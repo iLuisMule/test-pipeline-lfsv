@@ -10,6 +10,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <mule.maven.plugin.version>4.6.1</mule.maven.plugin.version>
+        <revision>1.0.0</revision>
     </properties>
     <build>
         <plugins>

@@ -30,7 +30,7 @@ jobs:
           ANYPOINT_CLIENT_SECRET: ${{ secrets.ANYPOINT_CLIENT_SECRET }}
         run: |
           APP_VERSION="1.0.${{ github.run_number }}"
-          mvn deploy --settings .maven/settings.xml -DskipMunitTests \
+          mvn clean deploy --settings .maven/settings.xml -DskipMunitTests \
           -Dclient.id="${{ secrets.CONNECTED_APP_CLIENT_ID }}" \
           -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}" \
           -Drevision=$APP_VERSION
