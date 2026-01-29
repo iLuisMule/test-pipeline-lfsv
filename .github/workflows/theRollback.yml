@@ -28,21 +28,11 @@ jobs:
           ANYPOINT_ID: ${{ secrets.CONNECTED_APP_CLIENT_ID }}
           ANYPOINT_SECRET: ${{ secrets.CONNECTED_APP_CLIENT_SECRET }}
         run: |
-          # Creamos un settings.xml temporal para que Maven encuentre el servidor "Repository"
-          echo "<settings>
-            <servers>
-              <server>
-                <id>Repository</id>
-                <username>$ANYPOINT_ID</username>
-                <password>$ANYPOINT_SECRET</password>
-              </server>
-            </servers>
-          </settings>" > settings.xml
-
-          # Ejecutamos el deploy usando el settings recién creado
-          mvn deploy --settings settings.xml -DskipMunitTests -DmuleDeploy \
+         # Ejecutamos el deploy usando el settings recién creado
+          mvn deploy --settings .maven/settings.xml -DskipMunitTests -DmuleDeploy \
           -Dclient.id="${{ secrets.CONNECTED_APP_CLIENT_ID }}" \
           -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}" \
           -Denv=Production \
           -Denv.key="${{ secrets.MULE_KEY }}" \
           -Dapp.name="test-pipeline-lfsv"
+          
