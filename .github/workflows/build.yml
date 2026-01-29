@@ -21,7 +21,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions: # AÑADIDO: Permite escribir tags
       contents: write
-
+    environment: 
+          name: ${{ github.event.inputs.target_env || 'Production' }}
+          
     steps:
       - name: Checkout this repo
         uses: actions/checkout@v4
@@ -49,7 +51,7 @@ jobs:
           -Dclient.id="${{ secrets.CONNECTED_APP_CLIENT_ID }}" \
           -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}"
 
-      - name: Deploy to CloudHub 2.0
+      - name: Deploy to CloudHub 2.0        
         env:
           ANYPOINT_CLIENT_ID: ${{ secrets.ANYPOINT_CLIENT_ID }}
           ANYPOINT_CLIENT_SECRET: ${{ secrets.ANYPOINT_CLIENT_SECRET }}
@@ -63,6 +65,7 @@ jobs:
           -Dclient.id="${{ secrets.CONNECTED_APP_CLIENT_ID }}" \
           -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}" \
           -Denv="$ENV_NAME" \
+          -Denv.key="${{ secrets.MULE_KEY }}" \
           -Dapp.name="test-pipeline-lfsv$APP_SUFFIX"
 
       - name: Create Git Tag

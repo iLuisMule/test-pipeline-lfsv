@@ -1,15 +1,16 @@
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd  http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+<mule xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd  http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd">
     <http:listener-config name="Listener-config">
         <http:listener-connection port="8081" host="0.0.0.0"></http:listener-connection>
     </http:listener-config>
-    <flow name="name1">
+    <configuration-properties doc:name="Configuration properties" doc:id="68b56543-8f6f-4950-8b29-0ac2762dd745" file="config/common.properties" />
+	<configuration-properties doc:name="Configuration properties" doc:id="7fd4ad17-8775-4e2c-9291-98b6cbcefdcc" file="config/${mule.env}.properties" />
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="2a87eeed-b2db-4829-9c87-6fa8ede9e1f9" file="config/${mule.env}-secure.properties" key="${mule.key}" >
+		<secure-properties:encrypt algorithm="Blowfish" />
+	</secure-properties:config>
+	<flow name="name1">
         <http:listener doc:id="hfsxvr" doc:name="Listener" path="/test" config-ref="Listener-config"></http:listener>
-        <set-payload doc:name="Set payload" doc:id="icdtdy" value='#[output application/json
----
-{
-    "message": "It worked!",
-    "feature": "New 15, protected and TAG"
-}]' mimeType="application/json"/>
+        <set-payload doc:name="Set payload" doc:id="icdtdy" value="#[output application/json&#10;---&#10;{&#10;    &quot;message&quot;: &quot;It worked!&quot;,&#10;    &quot;feature&quot;: &quot;New 16: protected, TAG and properties&quot;,&#10;    &quot;properties&quot;: {&#10;    		&quot;common&quot;: p('app.common'),&#10;    		&quot;third&quot;: {&#10;    			&quot;host&quot;: p('third.host'),&#10;    			&quot;user&quot;: p('secure::third.user'),&#10;    			&quot;pwd&quot;: p('secure::third.pwd')&#10;    		}&#10;    }&#10;}]" mimeType="application/json"/>
         <logger doc:name="Logger" doc:id="cgunrf" message="#[payload]"/>
     </flow>
 </mule>
