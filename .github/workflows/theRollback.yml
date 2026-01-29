@@ -1,4 +1,4 @@
-oname: "Production Rollback"
+name: "Production Rollback"
 
 on:
   workflow_dispatch:
