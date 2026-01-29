@@ -5,7 +5,7 @@ on:
 
 jobs:
   rollback:
-    name: "Ejecutar Rollback a Producción"
+    name: "Ejecutar Rollback to Producción"
     runs-on: ubuntu-latest
     environment: Production 
     
