@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>dacc71c3-5df5-4aec-8b33-e7f0b070ee24</groupId>
     <artifactId>test-pipeline-lfsv</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <packaging>mule-application</packaging>
     <name>test-pipeline-lfsv</name>
     <properties>
@@ -28,10 +28,10 @@
                     <cloudhub2Deployment>
                         <uri>https://anypoint.mulesoft.com</uri>
                         <provider>MC</provider>
-                        <environment>${env}</environment>
+                        <environment>Development</environment>
                         <target>Cloudhub-US-West-2</target>
                         <server>Repository</server>
-                        <applicationName>${app.name}</applicationName>
+                        <applicationName>test-pipeline-lfsv</applicationName>
                         <releaseChannel>LTS</releaseChannel>
                         <replicas>1</replicas>
                         <vCores>0.1</vCores>
