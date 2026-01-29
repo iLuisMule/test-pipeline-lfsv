@@ -25,8 +25,8 @@ jobs:
 
       - name: Deploy de Versión Estable
         env:
-          ANYPOINT_ID: ${{ secrets.ANYPOINT_CLIENT_ID }}
-          ANYPOINT_SECRET: ${{ secrets.ANYPOINT_CLIENT_SECRET }}
+          ANYPOINT_ID: ${{ secrets.CONNECTED_APP_CLIENT_ID }}
+          ANYPOINT_SECRET: ${{ secrets.CONNECTED_APP_CLIENT_SECRET }}
         run: |
           # Creamos un settings.xml temporal para que Maven encuentre el servidor "Repository"
           echo "<settings>
