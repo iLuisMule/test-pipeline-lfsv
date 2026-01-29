@@ -40,7 +40,7 @@ jobs:
           </settings>" > settings.xml
 
           # Ejecutamos el deploy usando el settings recién creado
-          echo mvn deploy --settings settings.xml -DskipMunitTests -DmuleDeploy \
+          mvn deploy --settings settings.xml -DskipMunitTests -DmuleDeploy \
           -Dclient.id="${{ secrets.CONNECTED_APP_CLIENT_ID }}" \
           -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}" \
           -Denv=Production \
