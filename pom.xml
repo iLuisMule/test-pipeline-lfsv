@@ -35,6 +35,8 @@
                         <server>Repository</server>
                         <applicationName>${app.name.dynamic}</applicationName>
                         <releaseChannel>LTS</releaseChannel>
+                        <muleVersion>4.9.12</muleVersion>                         
+                        <javaVersion>17</javaVersion>
                         <replicas>1</replicas>
                         <vCores>0.1</vCores>
                         <deploymentSettings>
