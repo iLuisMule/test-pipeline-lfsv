@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.mycompany</groupId>
+    <groupId>dacc71c3-5df5-4aec-8b33-e7f0b070ee24</groupId>
     <artifactId>test-pipeline-lfsv</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>mule-application</packaging>
     <name>test-pipeline-lfsv</name>
     <properties>
@@ -23,7 +23,23 @@
                 <artifactId>mule-maven-plugin</artifactId>
                 <version>${mule.maven.plugin.version}</version>
                 <extensions>true</extensions>
-                <configuration/>
+                <configuration>
+                    <classifier>mule-application</classifier>
+                    <cloudhub2Deployment>
+                        <uri>https://anypoint.mulesoft.com</uri>
+                        <provider>MC</provider>
+                        <environment>Development</environment>
+                        <target>Cloudhub-US-West-2</target>
+                        <server>Repository</server>
+                        <applicationName>${project.artifactId}</applicationName>
+                        <releaseChannel>LTS</releaseChannel>
+                        <replicas>1</replicas>
+                        <vCores>0.1</vCores>
+                        <deploymentSettings>
+                            <generateDefaultPublicUrl>true</generateDefaultPublicUrl>
+                        </deploymentSettings>
+                    </cloudhub2Deployment>
+                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -38,6 +54,12 @@
             <id>mulesoft-releases</id>
             <name>MuleSoft Releases Repository</name>
             <url>https://repository.mulesoft.org/releases/</url>
+            <layout>default</layout>
+        </repository>
+        <repository>
+            <id>Repository</id>
+            <name>Private Exchange repository</name>
+            <url>https://maven.anypoint.mulesoft.com/api/v3/organizations/${project.groupId}/maven</url>
             <layout>default</layout>
         </repository>
     </repositories>
@@ -60,4 +82,12 @@
             <classifier>mule-plugin</classifier>
         </dependency>
     </dependencies>
+    <distributionManagement>
+        <repository>
+            <id>Repository</id>
+            <name>Corporate Repository</name>
+            <url>https://maven.anypoint.mulesoft.com/api/v3/organizations/${project.groupId}/maven</url>
+            <layout>default</layout>
+        </repository>
+    </distributionManagement>
 </project>
