@@ -46,7 +46,6 @@ jobs:
           mvn deploy --settings .maven/settings.xml -DskipMunitTests -DmuleDeploy \
           -Dclient.id="${{ secrets.CONNECTED_APP_CLIENT_ID }}" \
           -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}"
-          -Dapp.name="test-pipeline-lfsv$APP_SUFFIX" \
           -Denv="$ENV_NAME"
       
       - name: Create Git Tag
