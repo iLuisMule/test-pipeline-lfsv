@@ -7,7 +7,8 @@
         <set-payload doc:name="Set payload" doc:id="icdtdy" value='#[output application/json
 ---
 {
-    "message": "It worked!"
+    "message": "It worked!",
+    "feature": "New"
 }]' mimeType="application/json"/>
         <logger doc:name="Logger" doc:id="cgunrf" message="#[payload]"/>
     </flow>
