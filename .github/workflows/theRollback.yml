@@ -1,0 +1,35 @@
+name: "Production Rollback"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  rollback:
+    name: "Ejecutar Rollback to Producción"
+    runs-on: ubuntu-latest
+    environment: Production 
+    
+    steps:
+      - name: Checkout de la Referencia Seleccionada
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0 # Esto permite que el pipeline encuentre los Tags
+
+      - name: Validar que sea un TAG
+        run: |
+          if [[ "${{ github.ref_type }}" != "tag" ]]; then
+            echo "ERROR: Por seguridad, solo se permiten TAGS certificados para Rollbacks."
+            exit 1
+          fi
+
+      - name: Deploy de Versión Estable
+        env:
+          ANYPOINT_ID: ${{ secrets.ANYPOINT_CLIENT_ID }}
+          ANYPOINT_SECRET: ${{ secrets.ANYPOINT_CLIENT_SECRET }}
+        run: |
+          mvn deploy -DmuleDeploy \
+            -Dclient.id="$ANYPOINT_ID" \
+            -Dclient.secret="$ANYPOINT_SECRET" \
+            -Denv=Production \
+            -DskipTests
