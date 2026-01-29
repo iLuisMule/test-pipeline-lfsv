@@ -25,12 +25,36 @@ jobs:
           java-version: 8
       
       - name: Publish to Exchange
+        env:
+          ANYPOINT_CLIENT_ID: ${{ secrets.ANYPOINT_CLIENT_ID }}
+          ANYPOINT_CLIENT_SECRET: ${{ secrets.ANYPOINT_CLIENT_SECRET }}
         run: |
+          APP_VERSION="1.0.${{ github.run_number }}"
           mvn deploy --settings .maven/settings.xml -DskipMunitTests \
           -Dclient.id="${{ secrets.CONNECTED_APP_CLIENT_ID }}" \
-          -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}"
+          -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}" \
+          -Drevision=$APP_VERSION
+
       - name: Deploy to CloudHub 2.0
+        env:
+          ANYPOINT_CLIENT_ID: ${{ secrets.ANYPOINT_CLIENT_ID }}
+          ANYPOINT_CLIENT_SECRET: ${{ secrets.ANYPOINT_CLIENT_SECRET }}
         run: |
+          # Lógica para determinar el ambiente y el nombre de la app
+          ENV_NAME=${{ github.event_name == 'workflow_dispatch' && github.event.inputs.target_env || 'Production' }}
+          APP_SUFFIX=$([[ "$ENV_NAME" == "Production" ]] && echo "" || echo "-dev")
+          APP_VERSION="1.0.${{ github.run_number }}"
           mvn deploy --settings .maven/settings.xml -DskipMunitTests -DmuleDeploy \
           -Dclient.id="${{ secrets.CONNECTED_APP_CLIENT_ID }}" \
           -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}"
+          -Dapp.name="test-pipeline-lfsv$APP_SUFFIX" \
+          -Denv="$ENV_NAME" \
+          -Drevision=$APP_VERSION
+      
+      - name: Create Git Tag
+        if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event.inputs.target_env == 'Production' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag v1.0.${{ github.run_number }}
+          git push origin v1.0.${{ github.run_number }}

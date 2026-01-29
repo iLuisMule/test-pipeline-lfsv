@@ -28,10 +28,10 @@
                     <cloudhub2Deployment>
                         <uri>https://anypoint.mulesoft.com</uri>
                         <provider>MC</provider>
-                        <environment>Development</environment>
+                        <environment>${env}</environment>
                         <target>Cloudhub-US-West-2</target>
                         <server>Repository</server>
-                        <applicationName>${project.artifactId}</applicationName>
+                        <applicationName>${app.name}</applicationName>
                         <releaseChannel>LTS</releaseChannel>
                         <replicas>1</replicas>
                         <vCores>0.1</vCores>
