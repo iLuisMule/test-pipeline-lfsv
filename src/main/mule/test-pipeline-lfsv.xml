@@ -10,7 +10,7 @@ http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/sc
 	</secure-properties:config>
 	<flow name="name1">
         <http:listener doc:id="hfsxvr" doc:name="Listener" path="/test" config-ref="Listener-config"></http:listener>
-        <set-payload doc:name="Set payload" doc:id="icdtdy" value="#[output application/json&#10;---&#10;{&#10;    &quot;feature&quot;: &quot;New 21: protected, TAG and properties&quot;,&#10;    &quot;properties&quot;: {&#10;    		&quot;common&quot;: p('app.common'),&#10;    		&quot;third&quot;: {&#10;    			&quot;host&quot;: p('third.host'),&#10;    			&quot;user&quot;: p('secure::third.user'),&#10;    			&quot;pwd&quot;: p('secure::third.pwd')&#10;    		}&#10;    },&#10;    &quot;description&quot;: &quot;The wrong version to produce CAOS&quot;&#10;}]" mimeType="application/json"/>
+        <set-payload doc:name="Set payload" doc:id="icdtdy" value="#[output application/json&#10;---&#10;{&#10;	&quot;message&quot;: &quot;It Worked!&quot;,&#10;    &quot;feature&quot;: &quot;New 21: protected, TAG and properties&quot;,&#10;    &quot;properties&quot;: {&#10;    		&quot;common&quot;: p('app.common'),&#10;    		&quot;third&quot;: {&#10;    			&quot;host&quot;: p('third.host'),&#10;    			&quot;user&quot;: p('secure::third.user'),&#10;    			&quot;pwd&quot;: p('secure::third.pwd')&#10;    		}&#10;    },&#10;    &quot;description&quot;: &quot;The right version before CAOS&quot;&#10;}]" mimeType="application/json"/>
         <logger doc:name="Logger" doc:id="cgunrf" message="#[payload]"/>
     </flow>
 </mule>
