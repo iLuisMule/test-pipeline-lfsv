@@ -1,8 +1,21 @@
 name: Publish to Exchange & Deploy to CH2.0
 
 on:
+  # 1. Mantiene el automático al mergear a main
   push:
     branches: [ main ]
+  
+  # 2. HABILITA LA EJECUCIÓN MANUAL DESDE CUALQUIER BRANCH
+  workflow_dispatch:
+    inputs:
+      target_env:
+        description: 'Ambiente de destino'
+        required: true
+        default: 'Development'
+        type: choice
+        options:
+          - Development
+          - Production
     
 jobs:         
   build:
@@ -48,11 +61,3 @@ jobs:
           -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}" \
           -Denv="$ENV_NAME" \
           -Dapp.name="test-pipeline-lfsv$APP_SUFFIX"
-      
-      - name: Create Git Tag
-        if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event.inputs.target_env == 'Production' }}
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git tag v1.0.${{ github.run_number }}
-          git push origin v1.0.${{ github.run_number }}
