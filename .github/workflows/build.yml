@@ -45,8 +45,9 @@ jobs:
           echo "DEBUG: Sufijo generado   = [$APP_SUFFIX]"
           mvn deploy --settings .maven/settings.xml -DskipMunitTests -DmuleDeploy \
           -Dclient.id="${{ secrets.CONNECTED_APP_CLIENT_ID }}" \
-          -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}"
-          -Denv="$ENV_NAME"
+          -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}" \
+          -Denv="$ENV_NAME" \
+          -Dapp.name="test-pipeline-lfsv$APP_SUFFIX"
       
       - name: Create Git Tag
         if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event.inputs.target_env == 'Production' }}

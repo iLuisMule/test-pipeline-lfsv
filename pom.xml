@@ -10,6 +10,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <mule.maven.plugin.version>4.6.1</mule.maven.plugin.version>
+        <environment>${env}</environment>
+        <applicationName>${app.name}</applicationName>
     </properties>
     <build>
         <plugins>
@@ -28,10 +30,10 @@
                     <cloudhub2Deployment>
                         <uri>https://anypoint.mulesoft.com</uri>
                         <provider>MC</provider>
-                        <environment>Production</environment>
+                        <environment>${env}</environment>
                         <target>Cloudhub-US-West-2</target>
                         <server>Repository</server>
-                        <applicationName>test-pipeline-lfsv</applicationName>
+                        <applicationName>${app.name}</applicationName>
                         <releaseChannel>LTS</releaseChannel>
                         <replicas>1</replicas>
                         <vCores>0.1</vCores>
