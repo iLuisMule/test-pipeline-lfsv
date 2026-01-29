@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>dacc71c3-5df5-4aec-8b33-e7f0b070ee24</groupId>
 	<artifactId>test-pipeline-lfsv</artifactId>
-	<version>1.0.17</version>
+	<version>1.0.18</version>
 	<packaging>mule-application</packaging>
 	<name>test-pipeline-lfsv</name>
 	<properties>
