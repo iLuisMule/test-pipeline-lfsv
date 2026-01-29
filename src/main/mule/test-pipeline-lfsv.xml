@@ -8,7 +8,7 @@
 ---
 {
     "message": "It worked!",
-    "feature": "New 14, protected"
+    "feature": "New 15, protected and TAG"
 }]' mimeType="application/json"/>
         <logger doc:name="Logger" doc:id="cgunrf" message="#[payload]"/>
     </flow>

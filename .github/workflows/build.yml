@@ -19,6 +19,9 @@ on:
 jobs:         
   build:
     runs-on: ubuntu-latest
+    permissions: # AÑADIDO: Permite escribir tags
+      contents: write
+
     steps:
       - name: Checkout this repo
         uses: actions/checkout@v4
@@ -61,3 +64,21 @@ jobs:
           -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}" \
           -Denv="$ENV_NAME" \
           -Dapp.name="test-pipeline-lfsv$APP_SUFFIX"
+
+      - name: Create Git Tag
+        # CONDICIÓN: Éxito Y (es rama main O seleccionaste Production manualmente)
+        if: ${{ success() && (github.ref == 'refs/heads/main' || github.event.inputs.target_env == 'Production') }}
+        run: |
+          # 1. Extraer la versión actual del POM
+          APP_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          
+          echo "Creando tag oficial para la versión: v$APP_VERSION"
+          
+          # 2. Configurar Git (identidad del bot)
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # 3. Crear el tag y subirlo
+          # Usamos -f (force) por si necesitas re-subir la misma versión después de un error
+          git tag -a v$APP_VERSION -m "Release oficial de Producción v$APP_VERSION"
+          git push origin v$APP_VERSION
