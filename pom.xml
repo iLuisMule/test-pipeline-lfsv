@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>dacc71c3-5df5-4aec-8b33-e7f0b070ee24</groupId>
     <artifactId>test-pipeline-lfsv</artifactId>
-    <version>1.0.10</version>
+    <version>1.0.13</version>
     <packaging>mule-application</packaging>
     <name>test-pipeline-lfsv</name>
     <properties>
@@ -35,6 +35,8 @@
                         <server>Repository</server>
                         <applicationName>${app.name.dynamic}</applicationName>
                         <releaseChannel>LTS</releaseChannel>
+                        <muleVersion>4.9.12</muleVersion>                         
+                        <javaVersion>17</javaVersion>
                         <replicas>1</replicas>
                         <vCores>0.1</vCores>
                         <deploymentSettings>

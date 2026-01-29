@@ -15,7 +15,6 @@ on:
         type: choice
         options:
           - Development
-          - Production
     
 jobs:         
   build:
@@ -38,6 +37,7 @@ jobs:
           java-version: 8
       
       - name: Publish to Exchange
+        continue-on-error: true
         env:
           ANYPOINT_CLIENT_ID: ${{ secrets.ANYPOINT_CLIENT_ID }}
           ANYPOINT_CLIENT_SECRET: ${{ secrets.ANYPOINT_CLIENT_SECRET }}
