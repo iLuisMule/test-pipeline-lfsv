@@ -1,8 +1,21 @@
 name: Publish to Exchange & Deploy to CH2.0
 
 on:
+  # 1. Mantiene el automático al mergear a main
   push:
     branches: [ main ]
+  
+  # 2. HABILITA LA EJECUCIÓN MANUAL DESDE CUALQUIER BRANCH
+  workflow_dispatch:
+    inputs:
+      target_env:
+        description: 'Ambiente de destino'
+        required: true
+        default: 'Development'
+        type: choice
+        options:
+          - Development
+          - Production
     
 jobs:         
   build:
