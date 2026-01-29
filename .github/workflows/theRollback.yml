@@ -28,7 +28,19 @@ jobs:
           ANYPOINT_ID: ${{ secrets.ANYPOINT_CLIENT_ID }}
           ANYPOINT_SECRET: ${{ secrets.ANYPOINT_CLIENT_SECRET }}
         run: |
-          mvn deploy -DmuleDeploy \
+          # Creamos un settings.xml temporal para que Maven encuentre el servidor "Repository"
+          echo "<settings>
+            <servers>
+              <server>
+                <id>Repository</id>
+                <username>$ANYPOINT_ID</username>
+                <password>$ANYPOINT_SECRET</password>
+              </server>
+            </servers>
+          </settings>" > settings.xml
+
+          # Ejecutamos el deploy usando el settings recién creado
+          mvn deploy -DmuleDeploy -s settings.xml \
             -Dclient.id="$ANYPOINT_ID" \
             -Dclient.secret="$ANYPOINT_SECRET" \
             -Denv=Production \
