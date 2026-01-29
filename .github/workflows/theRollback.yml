@@ -40,8 +40,9 @@ jobs:
           </settings>" > settings.xml
 
           # Ejecutamos el deploy usando el settings recién creado
-          mvn deploy -DmuleDeploy -s settings.xml \
-            -Dclient.id="$ANYPOINT_ID" \
-            -Dclient.secret="$ANYPOINT_SECRET" \
-            -Denv=Production \
-            -DskipTests
+          mvn deploy --settings settings.xml -DskipMunitTests -DmuleDeploy \
+          -Dclient.id="${{ secrets.CONNECTED_APP_CLIENT_ID }}" \
+          -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}" \
+          -Denv=Production \
+          -Denv.key="${{ secrets.MULE_KEY }}" \
+          -Dapp.name="test-pipeline-lfsv"
