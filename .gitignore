@@ -50,3 +50,19 @@ velocity.log
 # ACB defaults #
 # ------------------------------------------------------------------------------ #
 .tooling-project
+
+# MuleSoft / Anypoint Studio
+.mule/
+target/
+bin/
+.classpath
+.project
+.settings/
+
+# DataWeave Playground files
+src/test/resources/embedded-dw_*/
+**/Playground/inputs/
+**/Playground/outputs/
+
+# OS files
+.DS_Store
