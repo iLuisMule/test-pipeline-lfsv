@@ -1,0 +1,75 @@
+{
+  "basicConstraints": 65,
+  "criticalExtensionOIDs": [
+    "sodales",
+    "In",
+    "adipiscing"
+  ],
+  "extendedKeyUsage": [
+    "eget",
+    "ipsum",
+    "aliquam"
+  ],
+  "extensions": [
+    {
+      "criticality": true,
+      "oid": "nunc"
+    }
+  ],
+  "issuerAlternativeNames": [
+    {
+      "name": "Alexa",
+      "type": 14
+    }
+  ],
+  "issuerDN": {
+    "commonName": "mi",
+    "name": "Adriene"
+  },
+  "issuerUniqueID": [
+    true,
+    false,
+    true
+  ],
+  "issuerX500Principal": {
+    "name": "Alejandra"
+  },
+  "keyUsage": [
+    false,
+    true,
+    false
+  ],
+  "name": "Allison",
+  "nonCriticalExtensionOIDs": [
+    "sit",
+    "nunc",
+    "dolor"
+  ],
+  "publicKey": {
+    "algorithm": "tempor",
+    "modulus": 20,
+    "params": 28,
+    "publicKey": "consectetur"
+  },
+  "serialNumber": 81,
+  "serialNumberObject": {
+    "serialNumber": 13
+  },
+  "sigAlgName": "molestie",
+  "sigAlgOID": "Aliquam",
+  "subjectAlternativeNames": [
+    {
+      "name": "Alta",
+      "type": 14
+    }
+  ],
+  "subjectDN": {
+    "commonName": "Nunc",
+    "name": "Alanna"
+  },
+  "subjectX500Principal": {
+    "name": "Abbie"
+  },
+  "type": "felis",
+  "version": 4
+}
