@@ -2,43 +2,37 @@ name: "Emergency Rollback"
 
 on:
   workflow_dispatch:
-    inputs:
-      target_tag:
-        description: 'Selecciona el TAG (Versión) para el Rollback'
-        required: true
-        type: string # Esta es la línea que suele dar problemas si no está bien alineada
+    # Eliminamos los inputs manuales para no preguntar dos veces
 
 jobs:
   rollback:
     name: "Ejecutar Rollback a Producción"
     runs-on: ubuntu-latest
-    # Vinculamos al ambiente de Producción para usar sus secretos exclusivos
     environment: Production 
     
     steps:
-      - name: Checkout del Tag Específico
+      - name: Checkout de la Referencia Seleccionada
         uses: actions/checkout@v4
         with:
-          # Esto asegura que bajamos el código exacto de la versión estable
-          ref: ${{ github.event.inputs.target_tag }}
+          # GitHub ya sabe qué seleccionaste en "Use workflow from"
+          # Si seleccionas un TAG en ese combo, bajará ese TAG automáticamente
+          ref: ${{ github.ref_name }}
 
-      - name: Configurar JDK y Cache
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'zulu'
-          java-version: '17'
-          cache: 'maven'
+      - name: Validar que sea un TAG
+        run: |
+          # Opcional: Esto detiene el proceso si alguien intenta usar una rama en vez de un TAG
+          if [[ "${{ github.ref_type }}" != "tag" ]]; then
+            echo "ERROR: Solo se permiten TAGS para Rollbacks de emergencia."
+            exit 1
+          fi
 
-      - name: Deploy de Versión Estable a CloudHub 2.0
+      - name: Deploy de Versión Estable
         env:
           ANYPOINT_ID: ${{ secrets.ANYPOINT_CLIENT_ID }}
           ANYPOINT_SECRET: ${{ secrets.ANYPOINT_CLIENT_SECRET }}
-          SECURE_KEY: ${{ secrets.ENCRYPTION_KEY }}
         run: |
-          # Solo deployamos; no publicamos a Exchange porque la versión ya existe
           mvn deploy -DmuleDeploy \
             -Dclient.id="$ANYPOINT_ID" \
             -Dclient.secret="$ANYPOINT_SECRET" \
-            -Dsecure.key="$SECURE_KEY" \
             -Denv=Production \
             -DskipTests
