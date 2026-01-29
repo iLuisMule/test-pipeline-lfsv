@@ -41,6 +41,8 @@ jobs:
           # Lógica para determinar el ambiente y el nombre de la app
           ENV_NAME=${{ github.event_name == 'workflow_dispatch' && github.event.inputs.target_env || 'Production' }}
           APP_SUFFIX=$([[ "$ENV_NAME" == "Production" ]] && echo "" || echo "-dev")
+          echo "DEBUG: Ambiente destino  = [$ENV_NAME]"
+          echo "DEBUG: Sufijo generado   = [$APP_SUFFIX]"
           mvn deploy --settings .maven/settings.xml -DskipMunitTests -DmuleDeploy \
           -Dclient.id="${{ secrets.CONNECTED_APP_CLIENT_ID }}" \
           -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}"
